@@ -14,7 +14,6 @@ type CreateContext = (
 ) => Promise<Context>
 
 export const createContext: CreateContext = async (res, req) => {
-
   return {
     res,
     req,

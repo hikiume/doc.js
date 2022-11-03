@@ -1,9 +1,10 @@
-import { useNoteQuery } from "hooks/generated";
+import { CreateNoteInput } from "components/CreateNoteInput";
+import { useNoteState } from "hooks/useNoteState";
 import type { NextPage } from "next";
 import Link from "next/link";
 
 const Home: NextPage = () => {
-  const { data } = useNoteQuery();
+  const { data } = useNoteState();
 
   return (
     <>
@@ -15,6 +16,8 @@ const Home: NextPage = () => {
           </div>
         );
       })}
+      <p>title ノート作成</p>
+      <CreateNoteInput />
     </>
   );
 };

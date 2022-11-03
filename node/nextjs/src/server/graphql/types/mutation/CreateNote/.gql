@@ -1,5 +1,5 @@
-mutation CreateNote($title: String!, $tag: String!) {
-  CreateNote(title: $title, tag: $tag) {
+mutation CreateNote($title: String!) {
+  CreateNote(title: $title) {
     body
     code
     error

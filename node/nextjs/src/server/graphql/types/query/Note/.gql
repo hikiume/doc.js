@@ -3,6 +3,7 @@ query Note($noteId: String) {
     id
     title
     body
+    delete
     tagId
   }
 }

@@ -6,6 +6,13 @@ export const NoteUnit = objectType({
     t.nonNull.string("id")
     t.nonNull.string("title")
     t.nonNull.string("body")
-    t.nonNull.string("tagId")
+    t.string("tagId")
+    t.nonNull.boolean("delete")
+    t.nonNull.field("createdAt", {
+      type: "DateTime",
+    })
+    t.nonNull.field("updatedAt", {
+      type: "DateTime",
+    })
   },
 })

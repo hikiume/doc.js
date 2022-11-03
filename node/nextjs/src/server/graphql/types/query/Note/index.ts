@@ -12,12 +12,17 @@ export const Note = extendType({
         if (noteId) {
           const note = await prisma.note.findUnique({
             where: {
-              id: noteId
-            }
+              id: noteId,
+            },
           })
+          if (note?.delete === true) return []
           return note ? [note] : []
         }
-        return await prisma.note.findMany()
+        return await prisma.note.findMany({
+          where: {
+            delete: false
+          }
+        })
       }
     })
   },

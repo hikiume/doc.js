@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useNoteQuery } from "hooks/generated";
+import { DeleteNoteButton } from "components/DeleteNoteButton";
+import { useNoteState } from "hooks/useNoteState";
 
 let socket: any;
 
@@ -10,9 +11,7 @@ const ChatRoom: NextPage = () => {
   const [Input, setInput] = useState("");
   const router = useRouter();
   const { noteId } = router.query;
-  const { data, refetch } = useNoteQuery({
-    variables: { noteId: `${noteId}` },
-  });
+  const { data, refetch } = useNoteState(`${noteId}`);
 
   const note = data?.Note ? data.Note[0] : null;
 
@@ -45,9 +44,12 @@ const ChatRoom: NextPage = () => {
     socket.emit("save");
   };
 
+  if (!note) return <div>該当するノートなさそ</div>;
+
   return (
     <>
       <h2>Note Id: {noteId}</h2>
+      <DeleteNoteButton id={note?.id} />
       <textarea
         value={Input}
         onChange={(e) => sendMessage(e.currentTarget.value)}

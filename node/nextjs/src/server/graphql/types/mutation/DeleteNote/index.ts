@@ -1,18 +1,21 @@
 import { extendType, nonNull, stringArg } from "nexus"
 
-export const CreateNote = extendType({
+export const DeleteNote = extendType({
   type: "Mutation",
   definition(t) {
-    t.nonNull.field("CreateNote", {
+    t.nonNull.field("DeleteNote", {
       type: "Message",
       args: {
-        title: nonNull(stringArg()),
+        id: nonNull(stringArg()),
       },
-      async resolve(_, { title }, { prisma }) {
+      async resolve(_, { id }, { prisma }) {
         try {
-          await prisma.note.create({
+          await prisma.note.update({
+            where: {
+              id,
+            },
             data: {
-              title,
+              delete: true
             }
           })
         } catch (e) {
