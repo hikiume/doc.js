@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id  String @id @default(cuid())
+  tag String @unique
+
+  Note Note[]
+}
+
+model Note {
+  id    String @id @default(cuid())
+  title String
+  body  String
+  tagId String
+
+  tag Tag @relation(fields: [tagId], references: [id])
+}

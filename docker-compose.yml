@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    volumes:
+      - ./node:/home/document/node
+    working_dir: /home/document/node
+    tty: true
+    ports:
+      - 3000:3000
+      - 5555:5555
+  mysql:
+    image: mysql:8
+    volumes:
+      - ./mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password

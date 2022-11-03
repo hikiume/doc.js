@@ -1,0 +1,7 @@
+mutation CreateNote($title: String!, $tag: String!) {
+  CreateNote(title: $title, tag: $tag) {
+    body
+    code
+    error
+  }
+}

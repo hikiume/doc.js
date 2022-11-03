@@ -1,0 +1,8 @@
+query Note($noteId: String) {
+  Note(noteId: $noteId) {
+    id
+    title
+    body
+    tagId
+  }
+}
