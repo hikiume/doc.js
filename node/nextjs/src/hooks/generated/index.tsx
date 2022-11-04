@@ -42,23 +42,44 @@ export type MutationDeleteNoteArgs = {
 
 export type Note = {
   __typename?: 'Note';
-  body: Scalars['String'];
   createdAt: Scalars['DateTime'];
   delete: Scalars['Boolean'];
   id: Scalars['String'];
-  tagId?: Maybe<Scalars['String']>;
+  tag: Array<Maybe<Tag>>;
   title: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+};
+
+export type NoteContent = {
+  __typename?: 'NoteContent';
+  body: Scalars['String'];
+  noteId: Scalars['String'];
   updatedAt: Scalars['DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  Note?: Maybe<Array<Maybe<Note>>>;
+  Note?: Maybe<Array<Note>>;
+  NoteContent?: Maybe<NoteContent>;
+  Tag?: Maybe<Array<Tag>>;
 };
 
 
 export type QueryNoteArgs = {
   noteId?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryNoteContentArgs = {
+  noteId: Scalars['String'];
+};
+
+export type Tag = {
+  __typename?: 'Tag';
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  name: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type CreateNoteMutationVariables = Exact<{
@@ -80,7 +101,19 @@ export type NoteQueryVariables = Exact<{
 }>;
 
 
-export type NoteQuery = { __typename?: 'Query', Note?: Array<{ __typename?: 'Note', id: string, title: string, body: string, delete: boolean, tagId?: string | null } | null> | null };
+export type NoteQuery = { __typename?: 'Query', Note?: Array<{ __typename?: 'Note', id: string, title: string, delete: boolean, createdAt: any, updatedAt: any, tag: Array<{ __typename?: 'Tag', id: string, name: string, createdAt: any, updatedAt: any } | null> }> | null };
+
+export type NoteContentQueryVariables = Exact<{
+  noteId: Scalars['String'];
+}>;
+
+
+export type NoteContentQuery = { __typename?: 'Query', NoteContent?: { __typename?: 'NoteContent', noteId: string, body: string, updatedAt: any } | null };
+
+export type TagQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TagQuery = { __typename?: 'Query', Tag?: Array<{ __typename?: 'Tag', id: string, name: string, createdAt: any, updatedAt: any }> | null };
 
 
 export const CreateNoteDocument = gql`
@@ -158,9 +191,15 @@ export const NoteDocument = gql`
   Note(noteId: $noteId) {
     id
     title
-    body
     delete
-    tagId
+    createdAt
+    updatedAt
+    tag {
+      id
+      name
+      createdAt
+      updatedAt
+    }
   }
 }
     `;
@@ -192,3 +231,77 @@ export function useNoteLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NoteQ
 export type NoteQueryHookResult = ReturnType<typeof useNoteQuery>;
 export type NoteLazyQueryHookResult = ReturnType<typeof useNoteLazyQuery>;
 export type NoteQueryResult = Apollo.QueryResult<NoteQuery, NoteQueryVariables>;
+export const NoteContentDocument = gql`
+    query NoteContent($noteId: String!) {
+  NoteContent(noteId: $noteId) {
+    noteId
+    body
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useNoteContentQuery__
+ *
+ * To run a query within a React component, call `useNoteContentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNoteContentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNoteContentQuery({
+ *   variables: {
+ *      noteId: // value for 'noteId'
+ *   },
+ * });
+ */
+export function useNoteContentQuery(baseOptions: Apollo.QueryHookOptions<NoteContentQuery, NoteContentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NoteContentQuery, NoteContentQueryVariables>(NoteContentDocument, options);
+      }
+export function useNoteContentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NoteContentQuery, NoteContentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NoteContentQuery, NoteContentQueryVariables>(NoteContentDocument, options);
+        }
+export type NoteContentQueryHookResult = ReturnType<typeof useNoteContentQuery>;
+export type NoteContentLazyQueryHookResult = ReturnType<typeof useNoteContentLazyQuery>;
+export type NoteContentQueryResult = Apollo.QueryResult<NoteContentQuery, NoteContentQueryVariables>;
+export const TagDocument = gql`
+    query Tag {
+  Tag {
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useTagQuery__
+ *
+ * To run a query within a React component, call `useTagQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTagQuery(baseOptions?: Apollo.QueryHookOptions<TagQuery, TagQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TagQuery, TagQueryVariables>(TagDocument, options);
+      }
+export function useTagLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagQuery, TagQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TagQuery, TagQueryVariables>(TagDocument, options);
+        }
+export type TagQueryHookResult = ReturnType<typeof useTagQuery>;
+export type TagLazyQueryHookResult = ReturnType<typeof useTagLazyQuery>;
+export type TagQueryResult = Apollo.QueryResult<TagQuery, TagQueryVariables>;

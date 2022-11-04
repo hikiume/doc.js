@@ -3,23 +3,59 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const main = async () => {
-  const tag = await prisma.tag.create({
+  const tagNone = await prisma.tag.create({
     data: {
-      tag: "default"
+      name: "none"
+    }
+  })
+  const tagJavaScript = await prisma.tag.create({
+    data: {
+      name: "JavaScript"
     }
   })
   await prisma.note.create({
     data: {
-      title: "hello world first!!",
-      body: "hello world my document level 1",
-      tagId: tag.id
+      title: "hello world!!",
+      tag: {
+        connect: [{
+          id: tagNone.id
+        }]
+      },
+      noteContent: {
+        create: {
+          body: ""
+        }
+      }
     }
   })
   await prisma.note.create({
     data: {
-      title: "hello world second!!",
-      body: "hello world my document level 2",
-      tagId: tag.id
+      title: "javaScript lesson 1",
+      tag: {
+        connect: [{
+          id: tagJavaScript.id
+        }]
+      },
+      noteContent: {
+        create: {
+          body: ""
+        }
+      }
+    }
+  })
+  await prisma.note.create({
+    data: {
+      title: "javaScript lesson 2",
+      tag: {
+        connect: [{
+          id: tagJavaScript.id
+        }]
+      },
+      noteContent: {
+        create: {
+          body: ""
+        }
+      }
     }
   })
 }

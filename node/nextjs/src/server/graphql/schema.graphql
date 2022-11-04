@@ -17,15 +17,29 @@ type Mutation {
 }
 
 type Note {
-  body: String!
   createdAt: DateTime!
   delete: Boolean!
   id: String!
-  tagId: String
+  tag: [Tag]!
   title: String!
   updatedAt: DateTime!
 }
 
+type NoteContent {
+  body: String!
+  noteId: String!
+  updatedAt: DateTime!
+}
+
 type Query {
-  Note(noteId: String): [Note]
+  Note(noteId: String): [Note!]
+  NoteContent(noteId: String!): NoteContent
+  Tag: [Tag!]
+}
+
+type Tag {
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
 }

@@ -32,7 +32,6 @@ app.prepare().then(async () => {
     res.send("hello world!");
   });
 
-
   io.on("connection", async (socket: any) => {
     const noteId = socket.handshake.headers.referer?.replace("http://localhost:3000/note/", "")
     try {
@@ -55,9 +54,9 @@ app.prepare().then(async () => {
       socket.broadcast.to(socket.note.id).emit("message", e)
     });
     socket.on("save", async () => {
-      await prisma.note.update({
+      await prisma.noteContent.update({
         where: {
-          id: socket.note.id
+          noteId: socket.note.id
         },
         data: {
           body: socket.note.body

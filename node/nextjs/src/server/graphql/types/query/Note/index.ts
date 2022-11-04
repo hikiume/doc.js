@@ -3,7 +3,7 @@ import { extendType, stringArg } from "nexus"
 export const Note = extendType({
   type: "Query",
   definition(t) {
-    t.list.field("Note", {
+    t.list.nonNull.field("Note", {
       type: "Note",
       args: {
         noteId: stringArg()
@@ -14,15 +14,19 @@ export const Note = extendType({
             where: {
               id: noteId,
             },
+            include: {
+              tag: true
+            }
           })
           if (note?.delete === true) return []
           return note ? [note] : []
         }
-        return await prisma.note.findMany({
-          where: {
-            delete: false
+        const note = await prisma.note.findMany({
+          include: {
+            tag: true
           }
         })
+        return note
       }
     })
   },

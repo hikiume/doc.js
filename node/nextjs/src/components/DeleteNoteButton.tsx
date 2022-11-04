@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { Note, useDeleteNoteMutation } from "hooks/generated";
 import { useNoteState } from "hooks/useNoteState";
 import { useRouter } from "next/router";
+import FolderDeleteIcon from "@mui/icons-material/FolderDelete";
 
 type Props = {
   id: Note["id"];
@@ -21,7 +22,10 @@ export const DeleteNoteButton = ({ id }: Props) => {
 
   return (
     <div>
-      <Button onClick={onClick}>delete</Button>
+      <Button onClick={onClick}>
+        <FolderDeleteIcon style={{ marginRight: "6px" }} />
+        delete
+      </Button>
     </div>
   );
 };

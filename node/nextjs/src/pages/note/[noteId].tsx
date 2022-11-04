@@ -1,69 +1,73 @@
 import type { NextPage } from "next";
-import io from "socket.io-client";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { DeleteNoteButton } from "components/DeleteNoteButton";
 import { useNoteState } from "hooks/useNoteState";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { Button } from "@mui/material";
+import LaunchIcon from "@mui/icons-material/Launch";
+import EditIcon from "@mui/icons-material/Edit";
+import { Modal } from "components/Modal";
+import { useState } from "react";
 
-let socket: any;
+const Editor = dynamic<{}>(
+  () => import("components/Editor").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
-const ChatRoom: NextPage = () => {
-  const [Input, setInput] = useState("");
+const Index: NextPage = () => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { noteId } = router.query;
-  const { data, refetch } = useNoteState(`${noteId}`);
-
+  const { data } = useNoteState(`${noteId}`);
   const note = data?.Note ? data.Note[0] : null;
 
-  useEffect(() => {
-    if (note) {
-      (async () => {
-        const { data } = await refetch();
-        const note = data?.Note ? data.Note[0] : null;
-        setInput(note?.body || "");
-      })();
-    }
-  }, [note]);
-
-  useEffect(() => {
-    socket = io();
-    if (!noteId) return;
-
-    socket.on("connect", () => {
-      console.log("socket connected");
-      socket.emit("join", noteId);
-    });
-    socket.on("message", (data: any) => {
-      setInput(data);
-    });
-  }, [noteId]);
-
-  const sendMessage = (e: string) => {
-    setInput(e);
-    socket.emit("message", e);
-    socket.emit("save");
-  };
-
-  if (!note) return <div>該当するノートなさそ</div>;
+  if (!note) {
+    return (
+      <div>
+        <p>Hmm...this page doesn’t exist. Try searching for something else.</p>
+        <p className="text-xs text-gray-500">Try searching for another.</p>
+      </div>
+    );
+  }
 
   return (
     <>
-      <h2>Note Id: {noteId}</h2>
-      <DeleteNoteButton id={note?.id} />
-      <textarea
-        value={Input}
-        onChange={(e) => sendMessage(e.currentTarget.value)}
-      ></textarea>
-      <div
-        onClick={() => {
-          socket.disconnect();
-          router.push("/");
-        }}
-      >
-        back
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <p className="m-0 mb-2">Note Id: {noteId}</p>
+          <p className="m-0">title: {note.title}</p>
+        </div>
+        <div className="flex">
+          <div className="mr-4">
+            <Link href={`/view/${noteId}`}>
+              <Button>
+                <LaunchIcon style={{ marginRight: "6px" }} />
+                HTML
+              </Button>
+            </Link>
+          </div>
+          <div className="mr-4">
+            <DeleteNoteButton id={note?.id!} />
+          </div>
+          <div>
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              <EditIcon style={{ marginRight: "6px" }} />
+              Edit
+            </Button>
+          </div>
+        </div>
       </div>
+      <Editor />
+      <Modal open={open} setOpen={setOpen}>
+        <div>
+          <p>・タイトル変更</p>
+          <p>・権限変更</p>
+          <p>・タグ変更</p>
+        </div>
+      </Modal>
     </>
   );
 };
 
-export default ChatRoom;
+export default Index;

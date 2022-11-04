@@ -1,9 +1,15 @@
-query Note($noteId: String) {
+query Note($noteId: String)  {
   Note(noteId: $noteId) {
     id
     title
-    body
     delete
-    tagId
+    createdAt
+    updatedAt
+    tag {
+      id
+      name
+      createdAt
+      updatedAt
+    }
   }
 }
