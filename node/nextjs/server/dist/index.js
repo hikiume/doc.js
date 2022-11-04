@@ -24,7 +24,7 @@ app.prepare().then(async () => {
     io.attach(server);
     expressApp.get("/api/socket", async (req, res) => {
         request = req;
-        res.send("hello world!");
+        res.send("my document web socket dir!!");
     });
     io.on("connection", async (socket) => {
         var _a;
@@ -41,7 +41,6 @@ app.prepare().then(async () => {
             console.log(e);
         }
         socket.on("join", () => {
-            console.log("join!!");
             socket.join(socket.note.id);
         });
         socket.on("message", (e) => {

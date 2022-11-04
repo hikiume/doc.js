@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon",
     "build": "next build",
-    "start": "tsc --project tsconfig.server.json && NODE_ENV=production node server/dist/index.js",
+    "build:server": "tsc --project tsconfig.server.json",
+    "start": "NODE_ENV=production node server/dist/index.js",
     "lint": "next lint",
     "migrate": "prisma migrate dev",
     "codegen": "graphql-codegen --config codegen.yml"
