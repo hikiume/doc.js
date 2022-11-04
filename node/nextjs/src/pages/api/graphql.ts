@@ -1,8 +1,8 @@
 import { ApolloServer } from "apollo-server-micro"
 import Cors from "micro-cors"
 import { IncomingMessage as Req, ServerResponse as Res } from "http"
-import { createContext } from "server/graphql/context"
-import { schema } from "server/graphql/schema"
+import { createContext } from "graphql/context"
+import { schema } from "graphql/schema"
 import { InMemoryLRUCache } from "@apollo/utils.keyvaluecache"
 
 const corsOptions = {
