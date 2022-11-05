@@ -28,32 +28,34 @@ app.prepare().then(async () => {
     });
     io.on("connection", async (socket) => {
         var _a;
-        const noteId = (_a = socket.handshake.headers.referer) === null || _a === void 0 ? void 0 : _a.replace("http://localhost:3000/note/", "");
+        const noteId = (_a = socket.handshake.headers.referer) === null || _a === void 0 ? void 0 : _a.replace(`${process.env.NEXT_PUBLIC_URL}note/`, "");
+        let body = "";
         try {
-            const note = await prisma.note.findUnique({
+            const note = await prisma.noteContent.findUnique({
                 where: {
-                    id: noteId
+                    noteId,
                 }
             });
-            socket.note = note;
+            body = (note === null || note === void 0 ? void 0 : note.body) || "";
         }
         catch (e) {
             console.log(e);
         }
+        console.log(noteId);
         socket.on("join", () => {
-            socket.join(socket.note.id);
+            socket.join(noteId);
         });
         socket.on("message", (e) => {
-            socket.note.body = e;
-            socket.broadcast.to(socket.note.id).emit("message", e);
+            body = e;
+            socket.broadcast.to(noteId).emit("message", e);
         });
         socket.on("save", async () => {
             await prisma.noteContent.update({
                 where: {
-                    noteId: socket.note.id
+                    noteId: noteId
                 },
                 data: {
-                    body: socket.note.body
+                    body: body
                 }
             });
         });
