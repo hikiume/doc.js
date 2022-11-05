@@ -33,7 +33,7 @@ app.prepare().then(async () => {
   });
 
   io.on("connection", async (socket: any) => {
-    const noteId = socket.handshake.headers.referer?.replace("http://localhost:3000/note/", "")
+    const noteId = socket.handshake.headers.referer?.replace(process.env.NEXT_PUBLIC_URL, "")
     try {
       const note = await prisma.note.findUnique({
         where: {

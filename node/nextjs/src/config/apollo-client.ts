@@ -1,8 +1,5 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
 
-const baseURL = process.env.NODE_ENV === "development"
-  ? "http://localhost:3000/" : "http://133.18.195.221:3000/"
-
 export const cache: InMemoryCache = new InMemoryCache()
 
 /**
@@ -11,7 +8,7 @@ export const cache: InMemoryCache = new InMemoryCache()
 export const apolloClient = new ApolloClient({
   cache,
   link: createHttpLink({
-    uri: `${baseURL}api/graphql`,
+    uri: `${process.env.NEXT_PUBLIC_URL}api/graphql`,
     credentials: "include",
   }),
 })
