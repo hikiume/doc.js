@@ -1,0 +1,7 @@
+mutation DeleteTag($tagId: String!) {
+  DeleteTag(tagId: $tagId) {
+    body
+    code
+    error
+  }
+}

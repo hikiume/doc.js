@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 const main = async () => {
   const tagNone = await prisma.tag.create({
     data: {
-      name: "none"
+      name: "MyDocument"
     }
   })
   const tagJavaScript = await prisma.tag.create({
@@ -15,7 +15,8 @@ const main = async () => {
   })
   await prisma.note.create({
     data: {
-      title: "hello world!!",
+      id: "cla2r2cgc0000l0avspmr9x7u",
+      title: "document",
       tag: {
         connect: [{
           id: tagNone.id

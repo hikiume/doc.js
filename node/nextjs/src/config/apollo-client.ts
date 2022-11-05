@@ -1,6 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
 
-const baseURL = "http://localhost:3000/"
+const baseURL = process.env.NODE_ENV === "development"
+  ? "http://localhost:3000/" : "http://133.18.195.221:3000/"
 
 export const cache: InMemoryCache = new InMemoryCache()
 

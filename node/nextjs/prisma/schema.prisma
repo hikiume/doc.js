@@ -12,6 +12,7 @@ model Tag {
   id        String   @id @default(cuid())
   name      String   @unique
   note      Note[]
+  delete    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

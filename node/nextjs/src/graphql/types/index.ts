@@ -1,6 +1,8 @@
 // mutation
 export * from "./mutation/CreateNote"
+export * from "./mutation/CreateTag"
 export * from "./mutation/DeleteNote"
+export * from "./mutation/DeleteTag"
 
 // query
 export * from "./query/Note"

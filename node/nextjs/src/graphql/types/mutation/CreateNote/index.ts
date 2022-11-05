@@ -7,16 +7,26 @@ export const CreateNote = extendType({
       type: "Message",
       args: {
         title: nonNull(stringArg()),
+        tagId: nonNull(stringArg())
       },
-      async resolve(_, { title }, { prisma }) {
+      async resolve(_, { title, tagId }, { prisma }) {
         try {
           await prisma.note.create({
             data: {
               title,
+              tag: {
+                connect: [{
+                  id: tagId
+                }]
+              },
+              noteContent: {
+                create: {
+                  body: ""
+                }
+              }
             }
           })
         } catch (e) {
-          console.log(e)
           return {
             body: "不成功っぴ！",
             code: "",

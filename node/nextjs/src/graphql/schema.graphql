@@ -12,8 +12,10 @@ type Message {
 }
 
 type Mutation {
-  CreateNote(title: String!): Message!
+  CreateNote(tagId: String!, title: String!): Message!
+  CreateTag(tagName: String!): Message!
   DeleteNote(id: String!): Message!
+  DeleteTag(tagId: String!): Message!
 }
 
 type Note {
@@ -39,6 +41,7 @@ type Query {
 
 type Tag {
   createdAt: DateTime!
+  delete: Boolean!
   id: String!
   name: String!
   updatedAt: DateTime!

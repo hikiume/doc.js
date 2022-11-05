@@ -5,6 +5,7 @@ export const TagUnit = objectType({
   definition(t) {
     t.nonNull.string("id")
     t.nonNull.string("name")
+    t.nonNull.boolean("delete")
     t.nonNull.field("createdAt", {
       type: "DateTime",
     })

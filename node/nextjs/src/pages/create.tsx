@@ -1,11 +1,17 @@
-import { CreateNoteInput } from "components/CreateNoteInput";
+import { CreateNote } from "components/CreatePage/CreateNote";
+import { CreateTag } from "components/CreatePage/CreateTag";
+import { DeleteTag } from "components/CreatePage/DeleteTag";
 import type { NextPage } from "next";
 
 const Index: NextPage = () => {
+
   return (
     <>
-      <p>title ノート作成</p>
-      <CreateNoteInput />
+      <h1 className="text-2xl">Creation</h1>
+      <CreateTag />
+      <CreateNote />
+      <h1 className="text-2xl">Destruction</h1>
+      <DeleteTag />
     </>
   );
 };

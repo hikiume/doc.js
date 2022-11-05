@@ -8,6 +8,7 @@ query Note($noteId: String)  {
     tag {
       id
       name
+      delete
       createdAt
       updatedAt
     }

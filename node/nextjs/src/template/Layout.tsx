@@ -4,6 +4,7 @@ import { DirView } from "components/DirTree";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import { Alert } from "./Alert";
 
 type Props = {
   children: ReactNode;
@@ -46,6 +47,7 @@ export const Layout = ({ children }: Props) => {
           </div>
         </div>
         <div className="w-full m-4">{children}</div>
+        <Alert />
       </div>
       <p className="phone text-center my-16">
         表示できねぇむりぽっ！

@@ -24,15 +24,13 @@ export const Details = ({ dir }: { dir: Dir }) => {
             <summary className="flex items-center">
               <ExpandMoreIcon className="icon" />
               <div className="py-1 pr-2">
-                {name === "ikki" ? (
+                {name === "MyDocument" ? (
                   <img src={MyIcon.src} alt="ikki icon" />
                 ) : null}
-                {name === "none" ? (
-                  <CategoryIcon sx={{ fontSize: 16 }} />
-                ) : null}
                 {name === "JavaScript" ? <JavaScriptIcon /> : null}
+                {name === "" ? <CategoryIcon sx={{ fontSize: 16 }} /> : null}
               </div>
-              <span>{name}</span>
+              <span>{name === "" ? "Uncategorized" : name}</span>
             </summary>
             <Details dir={entity} />
           </details>

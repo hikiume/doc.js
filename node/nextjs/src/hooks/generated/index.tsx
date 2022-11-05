@@ -27,17 +27,30 @@ export type Message = {
 export type Mutation = {
   __typename?: 'Mutation';
   CreateNote: Message;
+  CreateTag: Message;
   DeleteNote: Message;
+  DeleteTag: Message;
 };
 
 
 export type MutationCreateNoteArgs = {
+  tagId: Scalars['String'];
   title: Scalars['String'];
+};
+
+
+export type MutationCreateTagArgs = {
+  tagName: Scalars['String'];
 };
 
 
 export type MutationDeleteNoteArgs = {
   id: Scalars['String'];
+};
+
+
+export type MutationDeleteTagArgs = {
+  tagId: Scalars['String'];
 };
 
 export type Note = {
@@ -77,6 +90,7 @@ export type QueryNoteContentArgs = {
 export type Tag = {
   __typename?: 'Tag';
   createdAt: Scalars['DateTime'];
+  delete: Scalars['Boolean'];
   id: Scalars['String'];
   name: Scalars['String'];
   updatedAt: Scalars['DateTime'];
@@ -84,10 +98,18 @@ export type Tag = {
 
 export type CreateNoteMutationVariables = Exact<{
   title: Scalars['String'];
+  tagId: Scalars['String'];
 }>;
 
 
 export type CreateNoteMutation = { __typename?: 'Mutation', CreateNote: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
+export type CreateTagMutationVariables = Exact<{
+  tagName: Scalars['String'];
+}>;
+
+
+export type CreateTagMutation = { __typename?: 'Mutation', CreateTag: { __typename?: 'Message', body: string, code: string, error: boolean } };
 
 export type DeleteNoteMutationVariables = Exact<{
   noteId: Scalars['String'];
@@ -96,12 +118,19 @@ export type DeleteNoteMutationVariables = Exact<{
 
 export type DeleteNoteMutation = { __typename?: 'Mutation', DeleteNote: { __typename?: 'Message', body: string, code: string, error: boolean } };
 
+export type DeleteTagMutationVariables = Exact<{
+  tagId: Scalars['String'];
+}>;
+
+
+export type DeleteTagMutation = { __typename?: 'Mutation', DeleteTag: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
 export type NoteQueryVariables = Exact<{
   noteId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type NoteQuery = { __typename?: 'Query', Note?: Array<{ __typename?: 'Note', id: string, title: string, delete: boolean, createdAt: any, updatedAt: any, tag: Array<{ __typename?: 'Tag', id: string, name: string, createdAt: any, updatedAt: any } | null> }> | null };
+export type NoteQuery = { __typename?: 'Query', Note?: Array<{ __typename?: 'Note', id: string, title: string, delete: boolean, createdAt: any, updatedAt: any, tag: Array<{ __typename?: 'Tag', id: string, name: string, delete: boolean, createdAt: any, updatedAt: any } | null> }> | null };
 
 export type NoteContentQueryVariables = Exact<{
   noteId: Scalars['String'];
@@ -113,12 +142,12 @@ export type NoteContentQuery = { __typename?: 'Query', NoteContent?: { __typenam
 export type TagQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TagQuery = { __typename?: 'Query', Tag?: Array<{ __typename?: 'Tag', id: string, name: string, createdAt: any, updatedAt: any }> | null };
+export type TagQuery = { __typename?: 'Query', Tag?: Array<{ __typename?: 'Tag', id: string, name: string, delete: boolean, createdAt: any, updatedAt: any }> | null };
 
 
 export const CreateNoteDocument = gql`
-    mutation CreateNote($title: String!) {
-  CreateNote(title: $title) {
+    mutation CreateNote($title: String!, $tagId: String!) {
+  CreateNote(title: $title, tagId: $tagId) {
     body
     code
     error
@@ -141,6 +170,7 @@ export type CreateNoteMutationFn = Apollo.MutationFunction<CreateNoteMutation, C
  * const [createNoteMutation, { data, loading, error }] = useCreateNoteMutation({
  *   variables: {
  *      title: // value for 'title'
+ *      tagId: // value for 'tagId'
  *   },
  * });
  */
@@ -151,6 +181,41 @@ export function useCreateNoteMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateNoteMutationHookResult = ReturnType<typeof useCreateNoteMutation>;
 export type CreateNoteMutationResult = Apollo.MutationResult<CreateNoteMutation>;
 export type CreateNoteMutationOptions = Apollo.BaseMutationOptions<CreateNoteMutation, CreateNoteMutationVariables>;
+export const CreateTagDocument = gql`
+    mutation CreateTag($tagName: String!) {
+  CreateTag(tagName: $tagName) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type CreateTagMutationFn = Apollo.MutationFunction<CreateTagMutation, CreateTagMutationVariables>;
+
+/**
+ * __useCreateTagMutation__
+ *
+ * To run a mutation, you first call `useCreateTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTagMutation, { data, loading, error }] = useCreateTagMutation({
+ *   variables: {
+ *      tagName: // value for 'tagName'
+ *   },
+ * });
+ */
+export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateTagMutation, CreateTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, options);
+      }
+export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
+export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
+export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;
 export const DeleteNoteDocument = gql`
     mutation DeleteNote($noteId: String!) {
   DeleteNote(id: $noteId) {
@@ -186,6 +251,41 @@ export function useDeleteNoteMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteNoteMutationHookResult = ReturnType<typeof useDeleteNoteMutation>;
 export type DeleteNoteMutationResult = Apollo.MutationResult<DeleteNoteMutation>;
 export type DeleteNoteMutationOptions = Apollo.BaseMutationOptions<DeleteNoteMutation, DeleteNoteMutationVariables>;
+export const DeleteTagDocument = gql`
+    mutation DeleteTag($tagId: String!) {
+  DeleteTag(tagId: $tagId) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type DeleteTagMutationFn = Apollo.MutationFunction<DeleteTagMutation, DeleteTagMutationVariables>;
+
+/**
+ * __useDeleteTagMutation__
+ *
+ * To run a mutation, you first call `useDeleteTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTagMutation, { data, loading, error }] = useDeleteTagMutation({
+ *   variables: {
+ *      tagId: // value for 'tagId'
+ *   },
+ * });
+ */
+export function useDeleteTagMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTagMutation, DeleteTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTagMutation, DeleteTagMutationVariables>(DeleteTagDocument, options);
+      }
+export type DeleteTagMutationHookResult = ReturnType<typeof useDeleteTagMutation>;
+export type DeleteTagMutationResult = Apollo.MutationResult<DeleteTagMutation>;
+export type DeleteTagMutationOptions = Apollo.BaseMutationOptions<DeleteTagMutation, DeleteTagMutationVariables>;
 export const NoteDocument = gql`
     query Note($noteId: String) {
   Note(noteId: $noteId) {
@@ -197,6 +297,7 @@ export const NoteDocument = gql`
     tag {
       id
       name
+      delete
       createdAt
       updatedAt
     }
@@ -273,6 +374,7 @@ export const TagDocument = gql`
   Tag {
     id
     name
+    delete
     createdAt
     updatedAt
   }

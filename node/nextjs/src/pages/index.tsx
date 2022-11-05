@@ -40,7 +40,7 @@ const Home: NextPage = () => {
       <p className="m-0">
         document{" "}
         <button
-          onClick={() => push("/view/cla2r2ckc0004l0avh1dqbnsc")}
+          onClick={() => push("/view/cla2r2cgc0000l0avspmr9x7u")}
           className="text-base"
         >
           <MuiLink>.here</MuiLink>

@@ -1,6 +1,6 @@
 overwrite: true
-schema: "./src/server/graphql/schema.graphql"
-documents: './src/server/graphql/**/**/.gql'
+schema: "./src/graphql/schema.graphql"
+documents: './src/graphql/**/**/.gql'
 generates:
   ./src/hooks/generated/index.tsx:
     plugins:

@@ -16,7 +16,7 @@ export const schema = makeSchema({
       "nexus-typegen",
       "index.d.ts"
     ),
-    schema: join(process.cwd(), "src", "server", "graphql", "schema.graphql"),
+    schema: join(process.cwd(), "src", "graphql", "schema.graphql"),
   },
   // 共通データのファイルパスの設定
   contextType: {
@@ -24,7 +24,6 @@ export const schema = makeSchema({
     module: join(
       process.cwd(),
       "src",
-      "server",
       "graphql",
       "context.ts"
     ),

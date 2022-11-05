@@ -2,6 +2,7 @@ query Tag  {
   Tag {
     id
     name
+    delete
     createdAt
     updatedAt
   }
