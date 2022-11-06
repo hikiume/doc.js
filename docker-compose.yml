@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: "Dockerfile"
     volumes:
-      - ./node:/home/document/node
-    working_dir: /home/document/node
+      - ./node:/home/my-document/node
+    working_dir: /home/my-document/node
     tty: true
     ports:
       - 3000:3000
