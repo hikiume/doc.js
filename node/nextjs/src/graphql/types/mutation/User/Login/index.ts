@@ -27,10 +27,10 @@ export const UserLogin = extendType({
           const jwt = sign(payload, jwtSecretKey)
           setCookie({ res }, "KEY", jwt, {
             maxAge: 100000000,
-            httpOnly: true,
+            // httpOnly: true,
             // secure: true,
-            path: "/",
-            sameSite: "none",
+            // path: "/",
+            // sameSite: "none",
           })
         } catch (e) {
           console.log(e)
