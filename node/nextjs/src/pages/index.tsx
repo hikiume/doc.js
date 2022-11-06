@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MuiLink from "@mui/material/Link";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {

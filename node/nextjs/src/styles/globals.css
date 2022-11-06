@@ -8,7 +8,7 @@ body {
 }
 
 details[open] .icon {
-  transform: rotate(180deg);
+  transform: rotate(270deg);
 }
 
 .boder-r {

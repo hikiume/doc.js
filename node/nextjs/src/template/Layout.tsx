@@ -45,6 +45,15 @@ export const Layout = ({ children }: Props) => {
               </CreateButton>
             </Link>
           </div>
+          <p className="text-center m-0 text-gray-500 text-xs mb-2">
+            <a
+              href="https://github.com/kazuki-lv12/my-document/releases/tag/v0.0.1"
+              target="_blank"
+              rel="noreferrer"
+            >
+              version 0.0.1
+            </a>
+          </p>
         </div>
         <div className="w-full m-4">{children}</div>
         <Alert />

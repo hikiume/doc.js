@@ -24,11 +24,8 @@ app.prepare().then(async () => {
   const server: Server = createServer(expressApp);
   const io: socketioServer = new socketioServer();
 
-  let request: Request
-
   io.attach(server);
   expressApp.get("/api/socket", async (req: Request, res: Response) => {
-    request = req
     res.send("my document web socket dir!!");
   });
 
