@@ -1,0 +1,10 @@
+query UserState {
+  UserState {
+    id
+    name
+    password
+    icon
+    createdAt
+    updatedAt
+  }
+}

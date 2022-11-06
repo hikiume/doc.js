@@ -20,7 +20,7 @@ details[open] .icon {
     display: none;
   }
 }
-@media (max-width: 1919px) {
+@media (max-width: 1900px) {
   .pc {
     display: none;
   }

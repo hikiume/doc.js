@@ -16,6 +16,8 @@ type Mutation {
   CreateTag(tagName: String!): Message!
   DeleteNote(id: String!): Message!
   DeleteTag(tagId: String!): Message!
+  UserCreate(name: String!, password: String!, password2: String!): Message!
+  UserLogin(name: String!, password: String!): Message!
 }
 
 type Note {
@@ -37,6 +39,9 @@ type Query {
   Note(noteId: String): [Note!]
   NoteContent(noteId: String!): NoteContent
   Tag: [Tag!]
+  User(id: String!): User
+  UserList: [User]!
+  UserState: User
 }
 
 type Tag {
@@ -44,5 +49,14 @@ type Tag {
   delete: Boolean!
   id: String!
   name: String!
+  updatedAt: DateTime!
+}
+
+type User {
+  createdAt: DateTime!
+  icon: String!
+  id: String!
+  name: String!
+  password: String!
   updatedAt: DateTime!
 }

@@ -8,23 +8,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tag {
+model User {
   id        String   @id @default(cuid())
   name      String   @unique
+  password  String
+  icon      String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   note      Note[]
+  tag       Tag[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String   @unique
   delete    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  note      Note[]
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Note {
   id          String       @id @default(cuid())
-  tag         Tag[]
+  userId      String
   title       String
+  authority   Boolean      @default(false)
   delete      Boolean      @default(false)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  tag         Tag[]
   noteContent NoteContent?
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model NoteContent {

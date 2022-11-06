@@ -43,14 +43,16 @@ export const Editor = () => {
       socket.emit("join", noteId);
     });
     socket.on("message", (data: any) => {
+      console.log(data)
       setInput(data);
     });
   }, [noteId]);
 
   const sendMessage = (e: string) => {
+    console.log(e)
     setInput(e);
     socket.emit("message", e);
-    socket.emit("save");
+    socket.emit("save", e);
   };
 
   hljs.configure({

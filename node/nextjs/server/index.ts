@@ -31,33 +31,22 @@ app.prepare().then(async () => {
 
   io.on("connection", async (socket: any) => {
     const noteId = socket.handshake.headers.referer?.replace(`${process.env.NEXT_PUBLIC_URL}note/`, "")
-    let body = ""
-    try {
-      const note = await prisma.noteContent.findUnique({
-        where: {
-          noteId,
-        }
-      })
-      body = note?.body || "";
-    } catch (e) {
-      console.log(e)
-    }
 
-    console.log(noteId)
     socket.on("join", () => {
       socket.join(noteId);
     });
     socket.on("message", (e: string) => {
-      body = e
+      console.log(e)
       socket.broadcast.to(noteId).emit("message", e)
     });
-    socket.on("save", async () => {
+    socket.on("save", async (e: string) => {
+      console.log(e)
       await prisma.noteContent.update({
         where: {
           noteId: noteId
         },
         data: {
-          body: body
+          body: e
         }
       })
     })

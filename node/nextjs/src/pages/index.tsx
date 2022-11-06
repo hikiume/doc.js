@@ -2,12 +2,21 @@ import type { NextPage } from "next";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MuiLink from "@mui/material/Link";
 import { useRouter } from "next/router";
+import { LoginForm } from "components/SignupForm/LoginForm";
+import { CreateForm } from "components/SignupForm/CreateForm";
+import { useReactiveVar } from "@apollo/client";
+import { userVar } from "reactive";
+import { useUserListQuery } from "hooks/generated";
+import Link from "next/link";
 
 const Home: NextPage = () => {
+  const user = useReactiveVar(userVar);
   const { push } = useRouter();
+  const { data } = useUserListQuery();
+
   return (
     <>
-      <h1 className="text-2xl">welcome! my document</h1>
+      <h1>welcome! my document</h1>
       <div className="mb-4">
         <p className="m-0">
           It's a beta version, so the whole record may be blown XD
@@ -21,7 +30,7 @@ const Home: NextPage = () => {
         </div>
         <div>
           <p className="m-0">Selecting a file opens a text editor.</p>
-          <p className="m-0">
+          <p className="m-0 mb-2">
             You can create a file from the button at the bottom.
           </p>
         </div>
@@ -45,6 +54,23 @@ const Home: NextPage = () => {
           <MuiLink>.here</MuiLink>
         </button>
       </p>
+      {user ? null : (
+        <>
+          <h1>You are not logged in.🫵</h1>
+          <LoginForm />
+          <CreateForm />
+        </>
+      )}
+      <h1>member</h1>
+      {data?.UserList.map((user, index) => {
+        return (
+          <div key={index}>
+            <li>
+              <Link href={`/user/${user?.id}`}>{user?.name}</Link>
+            </li>
+          </div>
+        );
+      })}
     </>
   );
 };
