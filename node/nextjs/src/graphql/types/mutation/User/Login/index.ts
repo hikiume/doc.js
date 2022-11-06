@@ -28,7 +28,7 @@ export const UserLogin = extendType({
           setCookie({ res }, "KEY", jwt, {
             maxAge: 100000000,
             httpOnly: true,
-            secure: true,
+            // secure: true,
             path: "/",
             sameSite: "none",
           })
