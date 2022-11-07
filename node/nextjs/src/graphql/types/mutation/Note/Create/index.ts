@@ -1,7 +1,5 @@
-import { verify } from "jsonwebtoken"
+import { isLogin } from "graphql/common/auth"
 import { extendType, nonNull, stringArg } from "nexus"
-import { parseCookies } from "nookies"
-import { Token } from "types"
 
 export const CreateNote = extendType({
   type: "Mutation",
@@ -13,16 +11,9 @@ export const CreateNote = extendType({
         tagId: nonNull(stringArg())
       },
       async resolve(_, { title, tagId }, { req, prisma }) {
-        const jwtSecretKey = process.env.JWT_SECRET_KEY || ""
-        const cookie = parseCookies({ req })["KEY"]
+        const user = await isLogin({ req, prisma })
+
         try {
-          const jwt = verify(cookie, jwtSecretKey) as Token
-          const user = await prisma.user.findUnique({
-            where: {
-              id: jwt.id
-            }
-          })
-          if (!user) throw new Error("")
           await prisma.note.create({
             data: {
               title,

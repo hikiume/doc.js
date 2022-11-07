@@ -33,7 +33,7 @@ export const UserCreate = extendType({
             // httpOnly: true,
             // secure: true,
             // path: "/",
-            // sameSite: "none",
+            sameSite: "none",
           })
         } catch (e) {
           console.log(e)

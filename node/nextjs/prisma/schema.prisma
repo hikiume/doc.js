@@ -9,14 +9,16 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  password  String
-  icon      String   @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  note      Note[]
-  tag       Tag[]
+  id          String        @id @default(cuid())
+  name        String        @unique
+  password    String
+  icon        String        @default("")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  note        Note[]
+  tag         Tag[]
+  NoteHistory NoteHistory[]
+  NoteComment NoteComment[]
 }
 
 model Tag {
@@ -32,14 +34,16 @@ model Tag {
 }
 
 model Note {
-  id          String       @id @default(cuid())
+  id          String        @id @default(cuid())
   userId      String
   title       String
-  authority   Boolean      @default(false)
-  delete      Boolean      @default(false)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  authority   Boolean       @default(false)
+  delete      Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   tag         Tag[]
+  NoteComment NoteComment[]
+  NoteHistory NoteHistory[]
   noteContent NoteContent?
 
   user User @relation(fields: [userId], references: [id])
@@ -50,5 +54,29 @@ model NoteContent {
   body      String   @db.MediumText
   updatedAt DateTime @updatedAt
 
-  user Note @relation(fields: [noteId], references: [id])
+  note Note @relation(fields: [noteId], references: [id])
+}
+
+model NoteHistory {
+  id        String   @id @default(cuid())
+  noteId    String
+  userId    String
+  body      String   @db.MediumText
+  createdAt DateTime @default(now())
+
+  note Note @relation(fields: [noteId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+}
+
+model NoteComment {
+  id        String   @id @default(cuid())
+  noteId    String
+  userId    String
+  body      String   @db.MediumText
+  delete    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  note Note @relation(fields: [noteId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }

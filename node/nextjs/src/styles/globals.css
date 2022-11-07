@@ -11,6 +11,11 @@ details[open] .icon {
   transform: rotate(270deg);
 }
 
+details[open] summary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
 .boder-r {
   border-right: 1px solid #e4edf4;
 }
@@ -27,8 +32,8 @@ details[open] .icon {
 }
 
 .ql-editor{
-  min-height: 85vh !important;
-  max-height: 85vh;
+  height: 80vh !important;
+  width: 65vw;
   overflow: hidden;
   overflow-y: scroll;
   overflow-x: auto;

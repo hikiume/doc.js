@@ -17,6 +17,17 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  delete: Scalars['Boolean'];
+  id: Scalars['String'];
+  noteId: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  userId: Scalars['String'];
+};
+
 export type Message = {
   __typename?: 'Message';
   body: Scalars['String'];
@@ -26,12 +37,21 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  CreateComment: Message;
   CreateNote: Message;
   CreateTag: Message;
+  DeleteComment: Message;
   DeleteNote: Message;
   DeleteTag: Message;
+  EditComment: Message;
   UserCreate: Message;
   UserLogin: Message;
+};
+
+
+export type MutationCreateCommentArgs = {
+  body: Scalars['String'];
+  noteId: Scalars['String'];
 };
 
 
@@ -46,6 +66,11 @@ export type MutationCreateTagArgs = {
 };
 
 
+export type MutationDeleteCommentArgs = {
+  commentId: Scalars['String'];
+};
+
+
 export type MutationDeleteNoteArgs = {
   id: Scalars['String'];
 };
@@ -53,6 +78,12 @@ export type MutationDeleteNoteArgs = {
 
 export type MutationDeleteTagArgs = {
   tagId: Scalars['String'];
+};
+
+
+export type MutationEditCommentArgs = {
+  body: Scalars['String'];
+  commentId: Scalars['String'];
 };
 
 
@@ -85,10 +116,21 @@ export type NoteContent = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type NoteHistory = {
+  __typename?: 'NoteHistory';
+  body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  id: Scalars['String'];
+  noteId: Scalars['String'];
+  userId: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
+  Comment: Array<Maybe<Comment>>;
   Note?: Maybe<Array<Note>>;
   NoteContent?: Maybe<NoteContent>;
+  NoteHistory: Array<Maybe<NoteHistory>>;
   Tag?: Maybe<Array<Tag>>;
   User?: Maybe<User>;
   UserList: Array<Maybe<User>>;
@@ -102,6 +144,11 @@ export type QueryNoteArgs = {
 
 
 export type QueryNoteContentArgs = {
+  noteId: Scalars['String'];
+};
+
+
+export type QueryNoteHistoryArgs = {
   noteId: Scalars['String'];
 };
 
@@ -129,6 +176,29 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type CreateCommentMutationVariables = Exact<{
+  body: Scalars['String'];
+  noteId: Scalars['String'];
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', CreateComment: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
+export type DeleteCommentMutationVariables = Exact<{
+  commentId: Scalars['String'];
+}>;
+
+
+export type DeleteCommentMutation = { __typename?: 'Mutation', DeleteComment: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
+export type EditCommentMutationVariables = Exact<{
+  commentId: Scalars['String'];
+  body: Scalars['String'];
+}>;
+
+
+export type EditCommentMutation = { __typename?: 'Mutation', EditComment: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
 export type CreateNoteMutationVariables = Exact<{
   title: Scalars['String'];
   tagId: Scalars['String'];
@@ -137,19 +207,19 @@ export type CreateNoteMutationVariables = Exact<{
 
 export type CreateNoteMutation = { __typename?: 'Mutation', CreateNote: { __typename?: 'Message', body: string, code: string, error: boolean } };
 
-export type CreateTagMutationVariables = Exact<{
-  tagName: Scalars['String'];
-}>;
-
-
-export type CreateTagMutation = { __typename?: 'Mutation', CreateTag: { __typename?: 'Message', body: string, code: string, error: boolean } };
-
 export type DeleteNoteMutationVariables = Exact<{
   noteId: Scalars['String'];
 }>;
 
 
 export type DeleteNoteMutation = { __typename?: 'Mutation', DeleteNote: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
+export type CreateTagMutationVariables = Exact<{
+  tagName: Scalars['String'];
+}>;
+
+
+export type CreateTagMutation = { __typename?: 'Mutation', CreateTag: { __typename?: 'Message', body: string, code: string, error: boolean } };
 
 export type DeleteTagMutationVariables = Exact<{
   tagId: Scalars['String'];
@@ -174,6 +244,18 @@ export type UserLoginMutationVariables = Exact<{
 
 
 export type UserLoginMutation = { __typename?: 'Mutation', UserLogin: { __typename?: 'Message', body: string, code: string, error: boolean } };
+
+export type CommentQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CommentQuery = { __typename?: 'Query', Comment: Array<{ __typename?: 'Comment', id: string, noteId: string, userId: string, body: string, delete: boolean, createdAt: any, updatedAt: any } | null> };
+
+export type NoteHistoryQueryVariables = Exact<{
+  noteId: Scalars['String'];
+}>;
+
+
+export type NoteHistoryQuery = { __typename?: 'Query', NoteHistory: Array<{ __typename?: 'NoteHistory', id: string, noteId: string, userId: string, body: string, createdAt: any } | null> };
 
 export type NoteQueryVariables = Exact<{
   noteId?: InputMaybe<Scalars['String']>;
@@ -212,6 +294,113 @@ export type UserStateQueryVariables = Exact<{ [key: string]: never; }>;
 export type UserStateQuery = { __typename?: 'Query', UserState?: { __typename?: 'User', id: string, name: string, password: string, icon: string, createdAt: any, updatedAt: any } | null };
 
 
+export const CreateCommentDocument = gql`
+    mutation CreateComment($body: String!, $noteId: String!) {
+  CreateComment(body: $body, noteId: $noteId) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      body: // value for 'body'
+ *      noteId: // value for 'noteId'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const DeleteCommentDocument = gql`
+    mutation DeleteComment($commentId: String!) {
+  DeleteComment(commentId: $commentId) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type DeleteCommentMutationFn = Apollo.MutationFunction<DeleteCommentMutation, DeleteCommentMutationVariables>;
+
+/**
+ * __useDeleteCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentMutation, { data, loading, error }] = useDeleteCommentMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *   },
+ * });
+ */
+export function useDeleteCommentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCommentMutation, DeleteCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(DeleteCommentDocument, options);
+      }
+export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
+export type DeleteCommentMutationResult = Apollo.MutationResult<DeleteCommentMutation>;
+export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<DeleteCommentMutation, DeleteCommentMutationVariables>;
+export const EditCommentDocument = gql`
+    mutation EditComment($commentId: String!, $body: String!) {
+  EditComment(commentId: $commentId, body: $body) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type EditCommentMutationFn = Apollo.MutationFunction<EditCommentMutation, EditCommentMutationVariables>;
+
+/**
+ * __useEditCommentMutation__
+ *
+ * To run a mutation, you first call `useEditCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editCommentMutation, { data, loading, error }] = useEditCommentMutation({
+ *   variables: {
+ *      commentId: // value for 'commentId'
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useEditCommentMutation(baseOptions?: Apollo.MutationHookOptions<EditCommentMutation, EditCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditCommentMutation, EditCommentMutationVariables>(EditCommentDocument, options);
+      }
+export type EditCommentMutationHookResult = ReturnType<typeof useEditCommentMutation>;
+export type EditCommentMutationResult = Apollo.MutationResult<EditCommentMutation>;
+export type EditCommentMutationOptions = Apollo.BaseMutationOptions<EditCommentMutation, EditCommentMutationVariables>;
 export const CreateNoteDocument = gql`
     mutation CreateNote($title: String!, $tagId: String!) {
   CreateNote(title: $title, tagId: $tagId) {
@@ -248,41 +437,6 @@ export function useCreateNoteMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateNoteMutationHookResult = ReturnType<typeof useCreateNoteMutation>;
 export type CreateNoteMutationResult = Apollo.MutationResult<CreateNoteMutation>;
 export type CreateNoteMutationOptions = Apollo.BaseMutationOptions<CreateNoteMutation, CreateNoteMutationVariables>;
-export const CreateTagDocument = gql`
-    mutation CreateTag($tagName: String!) {
-  CreateTag(tagName: $tagName) {
-    body
-    code
-    error
-  }
-}
-    `;
-export type CreateTagMutationFn = Apollo.MutationFunction<CreateTagMutation, CreateTagMutationVariables>;
-
-/**
- * __useCreateTagMutation__
- *
- * To run a mutation, you first call `useCreateTagMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateTagMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createTagMutation, { data, loading, error }] = useCreateTagMutation({
- *   variables: {
- *      tagName: // value for 'tagName'
- *   },
- * });
- */
-export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateTagMutation, CreateTagMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, options);
-      }
-export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
-export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
-export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;
 export const DeleteNoteDocument = gql`
     mutation DeleteNote($noteId: String!) {
   DeleteNote(id: $noteId) {
@@ -318,6 +472,41 @@ export function useDeleteNoteMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteNoteMutationHookResult = ReturnType<typeof useDeleteNoteMutation>;
 export type DeleteNoteMutationResult = Apollo.MutationResult<DeleteNoteMutation>;
 export type DeleteNoteMutationOptions = Apollo.BaseMutationOptions<DeleteNoteMutation, DeleteNoteMutationVariables>;
+export const CreateTagDocument = gql`
+    mutation CreateTag($tagName: String!) {
+  CreateTag(tagName: $tagName) {
+    body
+    code
+    error
+  }
+}
+    `;
+export type CreateTagMutationFn = Apollo.MutationFunction<CreateTagMutation, CreateTagMutationVariables>;
+
+/**
+ * __useCreateTagMutation__
+ *
+ * To run a mutation, you first call `useCreateTagMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTagMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTagMutation, { data, loading, error }] = useCreateTagMutation({
+ *   variables: {
+ *      tagName: // value for 'tagName'
+ *   },
+ * });
+ */
+export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateTagMutation, CreateTagMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, options);
+      }
+export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
+export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
+export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;
 export const DeleteTagDocument = gql`
     mutation DeleteTag($tagId: String!) {
   DeleteTag(tagId: $tagId) {
@@ -426,6 +615,85 @@ export function useUserLoginMutation(baseOptions?: Apollo.MutationHookOptions<Us
 export type UserLoginMutationHookResult = ReturnType<typeof useUserLoginMutation>;
 export type UserLoginMutationResult = Apollo.MutationResult<UserLoginMutation>;
 export type UserLoginMutationOptions = Apollo.BaseMutationOptions<UserLoginMutation, UserLoginMutationVariables>;
+export const CommentDocument = gql`
+    query Comment {
+  Comment {
+    id
+    noteId
+    userId
+    body
+    delete
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useCommentQuery__
+ *
+ * To run a query within a React component, call `useCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCommentQuery(baseOptions?: Apollo.QueryHookOptions<CommentQuery, CommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
+      }
+export function useCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CommentQuery, CommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CommentQuery, CommentQueryVariables>(CommentDocument, options);
+        }
+export type CommentQueryHookResult = ReturnType<typeof useCommentQuery>;
+export type CommentLazyQueryHookResult = ReturnType<typeof useCommentLazyQuery>;
+export type CommentQueryResult = Apollo.QueryResult<CommentQuery, CommentQueryVariables>;
+export const NoteHistoryDocument = gql`
+    query NoteHistory($noteId: String!) {
+  NoteHistory(noteId: $noteId) {
+    id
+    noteId
+    userId
+    body
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useNoteHistoryQuery__
+ *
+ * To run a query within a React component, call `useNoteHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNoteHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNoteHistoryQuery({
+ *   variables: {
+ *      noteId: // value for 'noteId'
+ *   },
+ * });
+ */
+export function useNoteHistoryQuery(baseOptions: Apollo.QueryHookOptions<NoteHistoryQuery, NoteHistoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NoteHistoryQuery, NoteHistoryQueryVariables>(NoteHistoryDocument, options);
+      }
+export function useNoteHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NoteHistoryQuery, NoteHistoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NoteHistoryQuery, NoteHistoryQueryVariables>(NoteHistoryDocument, options);
+        }
+export type NoteHistoryQueryHookResult = ReturnType<typeof useNoteHistoryQuery>;
+export type NoteHistoryLazyQueryHookResult = ReturnType<typeof useNoteHistoryLazyQuery>;
+export type NoteHistoryQueryResult = Apollo.QueryResult<NoteHistoryQuery, NoteHistoryQueryVariables>;
 export const NoteDocument = gql`
     query Note($noteId: String) {
   Note(noteId: $noteId) {

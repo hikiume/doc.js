@@ -3,7 +3,7 @@ import JavaScriptIcon from "assets/JavaScript.svg";
 import MyIcon from "assets/MyIcon.jpg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CategoryIcon from "@mui/icons-material/Category";
-import DescriptionIcon from '@mui/icons-material/Description';
+import DescriptionIcon from "@mui/icons-material/Description";
 
 type Dir = { [tag: string]: { [title: string]: string } };
 
@@ -21,8 +21,7 @@ export const Details = ({ dir }: { dir: Dir }) => {
         let title = `${entity}`.substring(`${entity}`.indexOf(".$") + 2);
         return isDir(entity) ? (
           <details key={name} className="cursor-pointer select-none">
-            <summary className="flex items-center hover:bg-slate-200">
-              <ExpandMoreIcon className="icon" />
+            <summary className="flex items-center pl-4 hover:bg-slate-200">
               <div className="py-1 pr-2">
                 {name === "MyDocument" ? (
                   <img src={MyIcon.src} alt="ikki icon" />
@@ -35,7 +34,10 @@ export const Details = ({ dir }: { dir: Dir }) => {
             <Details dir={entity} />
           </details>
         ) : (
-          <div key={name} className="pl-4 cursor-pointer select-none hover:bg-slate-100 py-1">
+          <div
+            key={name}
+            className="pl-8 cursor-pointer select-none hover:bg-slate-100 py-1"
+          >
             <Link href={link}>
               <div className="flex items-center">
                 <DescriptionIcon sx={{ fontSize: 16, marginRight: 1 }} />

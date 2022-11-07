@@ -1,0 +1,7 @@
+mutation EditComment($commentId: String!, $body: String!) {
+  EditComment(commentId: $commentId, body: $body) {
+    body
+    code
+    error
+  }
+}

@@ -9,6 +9,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import EditIcon from "@mui/icons-material/Edit";
 import { Modal } from "components/Modal";
 import { useState } from "react";
+import BasicTabs from "components/Tags";
 
 const Editor = dynamic<{}>(
   () => import("components/Editor").then((mod) => mod.Editor),
@@ -58,7 +59,12 @@ const Index: NextPage = () => {
           </div>
         </div>
       </div>
-      <Editor />
+      <div className="flex">
+        <Editor />
+        <div className="ml-4 w-full">
+          <BasicTabs />
+        </div>
+      </div>
       <Modal open={open} setOpen={setOpen}>
         <div>
           <p>・タイトル変更</p>

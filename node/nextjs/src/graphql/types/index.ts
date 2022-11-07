@@ -1,10 +1,13 @@
 // mutation
-export * from "./mutation/CreateNote"
-export * from "./mutation/CreateTag"
-export * from "./mutation/DeleteNote"
-export * from "./mutation/DeleteTag"
+export * from "./mutation/Note/Create"
+export * from "./mutation/Note/Delete"
+export * from "./mutation/Tag/Create"
+export * from "./mutation/Tag/Delete"
 export * from "./mutation/User/Create"
 export * from "./mutation/User/Login"
+export * from "./mutation/Comment/Create"
+export * from "./mutation/Comment/Delete"
+export * from "./mutation/Comment/Edit"
 
 // query
 export * from "./query/Note"
@@ -13,6 +16,8 @@ export * from "./query/Tag"
 export * from "./query/User"
 export * from "./query/User/State"
 export * from "./query/User/List"
+export * from "./query/Comment"
+export * from "./query/History"
 
 // unit
 export * from "./unit/Note"
@@ -21,3 +26,5 @@ export * from "./unit/Message"
 export * from "./unit/DateTime"
 export * from "./unit/Tag"
 export * from "./unit/User"
+export * from "./unit/Comment"
+export * from "./unit/History"

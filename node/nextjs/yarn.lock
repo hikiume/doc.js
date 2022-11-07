@@ -2427,6 +2427,11 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-10.17.60.tgz"
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
+"@types/ot@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@types/ot/-/ot-0.0.5.tgz#1c24edb572783d164cc2a45546d765fbcc7637b4"
+  integrity sha512-Xk6wEEkREHv/eeekQ6JrOjrq99SOP8qMtzSv9S/nn7ci2tkOsl5yHXGYqbe44bSujHB+GIyaBem/eQhaJi87ZQ==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz"
@@ -4939,6 +4944,11 @@ os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/os-tmpdir/-/os-tmpdir-1.0.2.tgz"
   integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
+
+ot@^0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/ot/-/ot-0.0.15.tgz#98bd953e6283670a01868e7ef4d2d983a29cd6a7"
+  integrity sha512-Bl7YcrV+R+UPPi1cWocHH8oUh1qaYEZdzRep5PpXesfN62PUrez92m17Za5+E1SWgtIx7SsvcH5yLliWEKhcCA==
 
 p-limit@3.1.0:
   version "3.1.0"

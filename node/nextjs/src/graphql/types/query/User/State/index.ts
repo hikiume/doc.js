@@ -11,6 +11,7 @@ export const UserState = extendType({
       async resolve(_, { }, { req, prisma }) {
         const jwtSecretKey = process.env.JWT_SECRET_KEY || ""
         const cookie = parseCookies({ req })["KEY"]
+        console.log(cookie)
         try {
           const jwt = verify(cookie, jwtSecretKey) as Token
           const user = await prisma.user.findUnique({
@@ -19,7 +20,8 @@ export const UserState = extendType({
             }
           })
           return user
-        } catch {
+        } catch (e) {
+          console.log(e)
           return null
         }
       }

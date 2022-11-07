@@ -3,6 +3,7 @@ import next, { NextApiHandler, NextApiRequest } from "next";
 import { Server as socketioServer, Socket } from "socket.io";
 import express, { Express, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client"
+import { isLogin } from "graphql/common/auth";
 
 declare global {
   var prisma: PrismaClient | undefined
@@ -31,8 +32,9 @@ app.prepare().then(async () => {
 
   io.on("connection", async (socket: any) => {
     const noteId = socket.handshake.headers.referer?.replace(`${process.env.NEXT_PUBLIC_URL}note/`, "")
+    let body = ""
 
-    socket.on("join", () => {
+    socket.on("join", (e: string) => {
       socket.join(noteId);
     });
     socket.on("message", (e: string) => {
@@ -40,7 +42,7 @@ app.prepare().then(async () => {
       socket.broadcast.to(noteId).emit("message", e)
     });
     socket.on("save", async (e: string) => {
-      console.log(e)
+      body = e
       await prisma.noteContent.update({
         where: {
           noteId: noteId
@@ -49,6 +51,16 @@ app.prepare().then(async () => {
           body: e
         }
       })
+    })
+    socket.on("disconnect", async () => {
+      socket.leave(noteId)
+      // await prisma.noteHistory.create({
+      //   data: {
+      //     noteId,
+      //     userId,
+      //     body
+      //   }
+      // })
     })
   });
 

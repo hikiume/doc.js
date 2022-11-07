@@ -1,0 +1,7 @@
+mutation CreateComment($body: String!, $noteId: String!) {
+  CreateComment(body: $body, noteId: $noteId) {
+    body
+    code
+    error
+  }
+}

@@ -10,6 +10,8 @@ import hljs from "highlight.js";
 // import 'react-quill/dist/quill.bubble.css'
 import ReactQuill from "react-quill";
 import { useNoteContentQuery } from "hooks/generated";
+import { useReactiveVar } from "@apollo/client";
+import { userVar } from "reactive";
 
 let socket: any;
 
@@ -21,7 +23,7 @@ export const Editor = () => {
   const { refetch } = useNoteContentQuery({
     variables: { noteId: `${noteId}` },
   });
-
+  const user = useReactiveVar(userVar)
   const note = data?.Note ? data.Note[0] : null;
 
   useEffect(() => {
@@ -40,16 +42,15 @@ export const Editor = () => {
 
     socket.on("connect", () => {
       console.log("socket connected");
-      socket.emit("join", noteId);
+      socket.emit("join", user?.id);
     });
     socket.on("message", (data: any) => {
-      console.log(data)
+      console.log(data);
       setInput(data);
     });
   }, [noteId]);
 
   const sendMessage = (e: string) => {
-    console.log(e)
     setInput(e);
     socket.emit("message", e);
     socket.emit("save", e);
@@ -60,15 +61,11 @@ export const Editor = () => {
   });
 
   return (
-    <code>
-      <pre>
-        <ReactQuill
-          theme="snow"
-          value={Input}
-          onChange={(e) => sendMessage(e)}
-          modules={toolbarOptions}
-        />
-      </pre>
-    </code>
+    <ReactQuill
+      theme="snow"
+      value={Input}
+      onChange={(e) => sendMessage(e)}
+      modules={toolbarOptions}
+    />
   );
 };

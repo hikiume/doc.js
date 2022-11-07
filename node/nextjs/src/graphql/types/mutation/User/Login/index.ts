@@ -29,7 +29,7 @@ export const UserLogin = extendType({
             maxAge: 100000000,
             // httpOnly: true,
             // secure: true,
-            // path: "/",
+            path: "/",
             // sameSite: "none",
           })
         } catch (e) {
