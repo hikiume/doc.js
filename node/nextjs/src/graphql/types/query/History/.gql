@@ -1,9 +1,0 @@
-query NoteHistory($noteId: String!)  {
-  NoteHistory(noteId: $noteId) {
-    id
-    noteId
-    userId
-    body
-    createdAt
-  }
-}

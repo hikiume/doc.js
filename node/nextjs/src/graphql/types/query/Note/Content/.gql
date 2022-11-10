@@ -1,7 +1,0 @@
- query NoteContent($noteId: String!) {
-  NoteContent(noteId: $noteId) {
-    noteId
-    body
-    updatedAt
-  }
-}

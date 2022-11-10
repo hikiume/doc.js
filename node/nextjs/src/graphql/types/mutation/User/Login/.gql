@@ -1,7 +1,0 @@
-mutation UserLogin($name: String!, $password: String!) {
-  UserLogin(name: $name, password: $password) {
-    body
-    code
-    error
-  }
-}

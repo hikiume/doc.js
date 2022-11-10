@@ -1,4 +1,4 @@
 FROM node:16
 
-WORKDIR /home/document/node
-USER node
+USER root
+RUN npm install -g firebase-tools

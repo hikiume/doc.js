@@ -1,7 +1,0 @@
-mutation DeleteNote($noteId: String!) {
-  DeleteNote(id: $noteId) {
-    body
-    code
-    error
-  }
-}

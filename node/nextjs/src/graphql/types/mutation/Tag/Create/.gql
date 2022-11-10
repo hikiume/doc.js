@@ -1,7 +1,0 @@
-mutation CreateTag($tagName: String!) {
-  CreateTag(tagName: $tagName) {
-    body
-    code
-    error
-  }
-}

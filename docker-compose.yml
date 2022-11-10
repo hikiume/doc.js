@@ -2,20 +2,13 @@ version: "3"
 
 services:
   node:
+    container_name: node
     build:
       context: .
       dockerfile: "Dockerfile"
     volumes:
-      - ./node:/home/my-document/node
-    working_dir: /home/my-document/node
+      - .:/home
+    working_dir: /home
     tty: true
     ports:
       - 3000:3000
-      - 5555:5555
-  mysql:
-    image: mysql:8
-    volumes:
-      - ./mysql:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
