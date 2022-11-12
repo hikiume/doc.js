@@ -4,6 +4,11 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@headlessui/react": "^1.7.4",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.13",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -25,6 +30,8 @@
     "css-minimizer-webpack-plugin": "^3.2.0",
     "dotenv": "^10.0.0",
     "dotenv-expand": "^5.1.0",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
@@ -49,6 +56,7 @@
     "react-dom": "^18.2.0",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^6.4.3",
+    "recoil": "^0.7.6",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -68,7 +76,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "firebase:start": "firebase emulators:start --export-on-exit=./data --import=./data"
+    "firebase:start": "cd ./firebase && firebase emulators:start --export-on-exit=./data --import=./data",
+    "format": "prettier --write ./src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
@@ -89,9 +98,14 @@
     ]
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.8",
+    "@types/draft-js": "^0.11.9",
+    "@types/draftjs-to-html": "^0.8.1",
     "autoprefixer": "^10.4.13",
     "firebase-tools": "^11.16.0",
     "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
     "tailwindcss": "^3.2.3"
   },
   "jest": {

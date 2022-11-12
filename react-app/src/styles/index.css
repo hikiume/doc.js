@@ -1,0 +1,15 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* details[open] .icon {
+  transform: rotate(270deg);
+} */
+
+.boder-r {
+  border-right: 1px solid #e4edf4;
+}
+
+.firebase-emulator-warning {
+  display: none;
+}

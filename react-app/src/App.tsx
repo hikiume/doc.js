@@ -1,18 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "pages/Home";
-import { Signup } from "pages/Signup";
-import { Login } from "pages/Login";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Home } from 'pages/Home'
+import { Note } from 'pages/note/Note'
+import { Layout } from 'template/Layout'
+import { RecoilRoot } from 'recoil'
+import { Create } from 'pages/Create'
+import { User } from 'pages/user/User'
+import { NotFound } from 'pages/NotFound'
+import { Workspace } from 'pages/Workspace'
 
 const App = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path={`/`} element={<Home />} />
-				<Route path={`/signup/`} element={<Signup />} />
-				<Route path={`/login/`} element={<Login />} />
-			</Routes>
-		</BrowserRouter>
-	);
-};
+  return (
+    <BrowserRouter>
+      <RecoilRoot>
+        <Layout>
+          <Routes>
+            <Route path={`*`} element={<NotFound />} />
+            <Route path={`/`} element={<Home />} />
+            <Route path={`/create`} element={<Create />} />
+            <Route path={`/user/*`} element={<User />} />
+            <Route path={`/note/*`} element={<Note />} />
+            <Route path={`/workspace`} element={<Workspace />} />
+          </Routes>
+        </Layout>
+      </RecoilRoot>
+    </BrowserRouter>
+  )
+}
 
-export default App;
+export default App
