@@ -1,11 +1,9 @@
 import { db } from 'config/firebase'
-import { getDatabase, onValue, ref, set } from 'firebase/database'
-import { useUser } from 'hooks/useUser'
+import { onValue, ref, set } from 'firebase/database'
 import { useEffect, useState } from 'react'
 
 export const Workspace = () => {
   const [text, setText] = useState('')
-  const { user } = useUser()
 
   const writeUserData = (text: string) => {
     set(ref(db, 'whiteboard/'), { text })

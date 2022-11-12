@@ -5,8 +5,8 @@ import { alert } from 'function/alert'
 import { ButtonBlue } from 'styles/mui/Button'
 
 export const Login = () => {
-  const [email, setEmail] = useState('kazuki.jar@gmail.com')
-  const [password, setPassword] = useState('hogehoge')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const { loginWithEmail } = useUser()
 
   const onClick = async () => {

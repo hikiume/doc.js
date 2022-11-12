@@ -76,14 +76,17 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "firebase:start": "cd ./firebase && firebase emulators:start --export-on-exit=./data --import=./data",
+    "firebase:start": "cd firebase/ && firebase emulators:start --export-on-exit=./data --import=./data",
     "format": "prettier --write ./src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off"
+    }
   },
   "browserslist": {
     "production": [

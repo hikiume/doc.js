@@ -36,8 +36,6 @@ export const Sidebar = () => {
     }
   }
 
-  const workspace = { workspace: 'f' }
-
   return (
     <div className="fixed flex flex-col w-[200px] boder-r bg-[#FBFBFA] h-[100vh]">
       <div className="flex items-center justify-center mt-4 mb-2">

@@ -8,9 +8,9 @@ import {
   Timestamp,
   where,
 } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { Note, NoteComment } from 'types'
+import { Note } from 'types'
 import { useUser } from './useUser'
 
 type Props = {

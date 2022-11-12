@@ -7,11 +7,12 @@ services:
       context: .
       dockerfile: "Dockerfile"
     volumes:
-      - .:/home
-    working_dir: /home
+      - .:/node
     tty: true
     ports:
+      # react
       - 3000:3000
+      # firebase emulator
       - 9005:9005
       - 9099:9099
       - 8080:8080

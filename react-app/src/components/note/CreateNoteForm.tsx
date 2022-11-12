@@ -12,7 +12,7 @@ import draftToHtml from 'draftjs-to-html'
 import { alert } from 'function/alert'
 import { useNote } from 'hooks/useNote'
 import { useTag } from 'hooks/useTag'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { ButtonBlue } from 'styles/mui/Button'
 import { Note, Tag } from 'types'
 

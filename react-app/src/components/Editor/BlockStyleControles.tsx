@@ -1,8 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react'
 import MenuIcon from '@mui/icons-material/Menu'
-import { convertToRaw, EditorState, RichUtils } from 'draft-js'
+import { EditorState, RichUtils } from 'draft-js'
 import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
-import draftToHtml from 'draftjs-to-html'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
