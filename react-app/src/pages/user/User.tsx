@@ -7,11 +7,13 @@ import { useUser } from "hooks/useUser"
 export const User = () => {
   const [file, setFile] = useState<File | null>(null)
   const [path, setPath] = useState<string>("")
+  const [name, setName] = useState<string>("")
   const inputRef = useRef<HTMLInputElement>(null)
   const { updateUserProfile } = useUser()
 
   useEffect(() => {
     setPath(`${auth.currentUser?.photoURL}`)
+    setName(`${auth.currentUser?.displayName}`)
   }, [auth])
 
   const inputClick = () => inputRef.current?.click()
@@ -24,6 +26,7 @@ export const User = () => {
   }
 
   const onClick = () => {
+    if (name) updateUserProfile({ displayName: name })
     if (file) updateUserProfile({ photo: file })
     setFile(null)
   }
@@ -53,12 +56,19 @@ export const User = () => {
           </div>
         </div>
         <div className="ml-4">
-          <p>{auth.currentUser?.displayName}</p>
+          <input
+            type="text"
+            className="border-none p-1 resize-none outline-none"
+            value={name}
+            onChange={(e) => setName(e.currentTarget.value)}
+          />
           <p className="text-xs text-gray-600">id: {auth.currentUser?.uid}</p>
         </div>
       </div>
       <div className="flex justify-center">
-        {file ? <ButtonBlue onClick={onClick}>Uplaod</ButtonBlue> : null}
+        {file || name !== auth.currentUser?.displayName ? (
+          <ButtonBlue onClick={onClick}>Uplaod</ButtonBlue>
+        ) : null}
       </div>
     </div>
   )
