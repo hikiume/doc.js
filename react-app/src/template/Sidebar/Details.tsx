@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
-import DescriptionIcon from '@mui/icons-material/Description'
-import { LangIcon } from './LangIcon'
+import { Link } from "react-router-dom"
+import DescriptionIcon from "@mui/icons-material/Description"
+import { LangIcon } from "./LangIcon"
 
 type Dir = { [tag: string]: { [title: string]: string } }
 
 const isDir = (entity: object): entity is Dir =>
-  !(entity instanceof Array) && typeof entity === 'object'
+  !(entity instanceof Array) && typeof entity === "object"
 
 export const Details = ({ dir }: { dir: Dir }) => {
   return (
@@ -13,15 +13,15 @@ export const Details = ({ dir }: { dir: Dir }) => {
       {Object.entries(dir).map(([name, entity], index) => {
         let link = `/note/${`${entity}`.substring(
           0,
-          `${entity}`.indexOf('.$')
+          `${entity}`.indexOf(".$")
         )}`
-        let title = `${entity}`.substring(`${entity}`.indexOf('.$') + 2)
+        let title = `${entity}`.substring(`${entity}`.indexOf(".$") + 2)
         return isDir(entity) ? (
           <details key={name} className="cursor-pointer select-none">
             <summary className="flex items-center pl-4 hover:bg-slate-200 py-1">
               <div className="pb-1 pr-2">
                 <LangIcon
-                  name={name.substring(`${entity}`.indexOf('.$') + 1)}
+                  name={name.substring(`${entity}`.indexOf(".$") + 1)}
                 />
               </div>
               <span>{name}</span>

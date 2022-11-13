@@ -6,35 +6,33 @@ import {
   SelectChangeEvent,
   Switch,
   TextField,
-} from '@mui/material'
-import { convertToRaw, EditorState } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
-import { alert } from 'function/alert'
-import { useNote } from 'hooks/useNote'
-import { useTag } from 'hooks/useTag'
-import { useState } from 'react'
-import { ButtonBlue } from 'styles/mui/Button'
-import { Note, Tag } from 'types'
+} from "@mui/material"
+import { convertToRaw, EditorState } from "draft-js"
+import { alert } from "function/alert"
+import { useNote } from "hooks/useNote"
+import { useTag } from "hooks/useTag"
+import { useState } from "react"
+import { ButtonBlue } from "styles/mui/Button"
+import { Note, Tag } from "types"
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } }
+const label = { inputProps: { "aria-label": "Switch demo" } }
 
 type Props = {
   editorState: EditorState
 }
 
 export const CreateNoteForm = ({ editorState }: Props) => {
-  const [tagId, setTagId] = useState<Tag['id']>('')
-  const [title, setTitle] = useState<Note['title']>('')
-  const [authority, setAuthority] = useState<Note['authority']>(false)
+  const [tagId, setTagId] = useState<Tag["id"]>("")
+  const [title, setTitle] = useState<Note["title"]>("")
+  const [authority, setAuthority] = useState<Note["authority"]>(false)
   const { createNote } = useNote()
   const { tagList } = useTag()
 
   const onClick = async () => {
-    if (tagId === '' || title === '') return alert('hmm')
+    if (tagId === "" || title === "") return alert("hmm")
     const tag = tagList.filter((e) => e.id === tagId)[0]
     const rawContentState = convertToRaw(editorState.getCurrentContent())
-    const markup = draftToHtml(rawContentState)
-    await createNote(tag, title, authority, markup)
+    await createNote(tag, title, authority, JSON.stringify(rawContentState))
   }
 
   const handleChange = (event: SelectChangeEvent) => {

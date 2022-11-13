@@ -1,7 +1,7 @@
-import { Editor as DraftEditor, EditorState } from 'draft-js'
-import 'draft-js/dist/Draft.css'
-import { BlockStyleControles } from './BlockStyleControles'
-import { BlockStyleFn } from './BlockStyleFn'
+import { Editor as DraftEditor, EditorState } from "draft-js"
+import "draft-js/dist/Draft.css"
+import { BlockStyleControles } from "./BlockStyleControles"
+import { BlockStyleFn } from "./BlockStyleFn"
 
 type Props = {
   editorState: EditorState

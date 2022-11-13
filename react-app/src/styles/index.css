@@ -13,3 +13,7 @@
 .firebase-emulator-warning {
   display: none;
 }
+
+.note p {
+  margin: 0;
+}

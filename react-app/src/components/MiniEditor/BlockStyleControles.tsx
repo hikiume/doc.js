@@ -1,21 +1,21 @@
-import { Listbox, Transition } from '@headlessui/react'
-import MenuIcon from '@mui/icons-material/Menu'
-import { EditorState, RichUtils } from 'draft-js'
-import { Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
+import { Listbox, Transition } from "@headlessui/react"
+import MenuIcon from "@mui/icons-material/Menu"
+import { EditorState, RichUtils } from "draft-js"
+import { Dispatch, Fragment, SetStateAction, useEffect, useState } from "react"
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ")
 }
 
 const BLOCK_TYPES = [
-  { label: 'スタイルなし', style: 'unstyled' },
-  { label: 'H4', style: 'header-four' },
-  { label: 'H5', style: 'header-five' },
-  { label: 'H6', style: 'header-six' },
-  { label: 'Blockquote', style: 'blockquote' },
-  { label: 'リスト', style: 'unordered-list-item' },
-  { label: '番号付きリスト', style: 'ordered-list-item' },
-  { label: 'Code Block', style: 'code-block' },
+  { label: "スタイルなし", style: "unstyled" },
+  { label: "H4", style: "header-four" },
+  { label: "H5", style: "header-five" },
+  { label: "H6", style: "header-six" },
+  { label: "Blockquote", style: "blockquote" },
+  { label: "リスト", style: "unordered-list-item" },
+  { label: "番号付きリスト", style: "ordered-list-item" },
+  { label: "Code Block", style: "code-block" },
 ]
 
 type Props = {
@@ -34,8 +34,8 @@ const BlockStyleOption = ({ blockStyle }: OptionProps) => (
   <Listbox.Option
     className={({ active }) =>
       classNames(
-        active ? 'bg-gray-100' : 'bg-white',
-        'cursor-default select-none relative py-2 px-3'
+        active ? "bg-gray-100" : "bg-white",
+        "cursor-default select-none relative py-2 px-3"
       )
     }
     value={blockStyle}
@@ -67,7 +67,7 @@ export const BlockStyleControles = ({ editorState, setEditorState }: Props) => {
             <Listbox.Button className="relative inline-flex items-center rounded-full py-2 px-2 bg-gray-50 text-sm font-medium text-gray-500 whitespace-nowrap hover:bg-gray-100 sm:px-3">
               <MenuIcon className="text-gray-500 flex-shrink-0 h-5 w-5 sm:-ml-1" />
               <span className="hidden truncate sm:ml-2 sm:block">
-                {blockStyle.label === null ? 'Style...' : blockStyle.label}
+                {blockStyle.label === null ? "Style..." : blockStyle.label}
               </span>
             </Listbox.Button>
 

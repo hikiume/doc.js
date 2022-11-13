@@ -1,5 +1,5 @@
-import { ReactComponent as JavaScript } from 'assets/javascript.svg'
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+import { ReactComponent as JavaScript } from "assets/javascript.svg"
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline"
 
 type Props = {
   name: string
@@ -7,7 +7,7 @@ type Props = {
 
 export const LangIcon = ({ name }: Props) => {
   switch (name) {
-    case 'JavaScript':
+    case "JavaScript":
       return <JavaScript width={16} height={16} />
     default:
       return <ErrorOutlineIcon fontSize="small" />

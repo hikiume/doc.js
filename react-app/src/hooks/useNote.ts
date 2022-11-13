@@ -1,20 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect } from "react"
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   query,
   Timestamp,
-} from 'firebase/firestore'
-import { storage, store } from 'config/firebase'
-import { useUser } from './useUser'
-import { alert } from 'function/alert'
-import { Note, Tag } from 'types'
-import { useRecoilState } from 'recoil'
-import { noteAtom } from 'context'
-import { ref, uploadString } from 'firebase/storage'
+  updateDoc,
+} from "firebase/firestore"
+import { storage, store } from "config/firebase"
+import { useUser } from "./useUser"
+import { alert } from "function/alert"
+import { Note, Tag } from "types"
+import { useRecoilState } from "recoil"
+import { noteAtom } from "context"
+import { ref, uploadString } from "firebase/storage"
 
 export const useNote = () => {
   const [noteList, setNoteList] = useRecoilState(noteAtom)
@@ -27,7 +29,7 @@ export const useNote = () => {
   }, [])
 
   const getNote = async (noteId: string) => {
-    const docRef = doc(store, 'note', noteId)
+    const docRef = doc(store, "note", noteId)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
       return { id: docSnap.id, ...docSnap.data() } as unknown as Note
@@ -38,7 +40,7 @@ export const useNote = () => {
 
   const getNoteList = async () => {
     const list: any[] = []
-    const querySnapshot = await getDocs(query(collection(store, 'note')))
+    const querySnapshot = await getDocs(query(collection(store, "note")))
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() })
     })
@@ -51,7 +53,7 @@ export const useNote = () => {
     authority: boolean,
     markup: string
   ) => {
-    if (!user) return alert('not login')
+    if (!user) return alert("not login")
     const note = {
       userId: user.uid,
       tag: {
@@ -64,13 +66,26 @@ export const useNote = () => {
       updateAt: Timestamp.fromDate(new Date()),
     }
 
-    const data = await addDoc(collection(store, 'note'), note)
-    uploadString(ref(storage, `${data.path}.html`), markup)
+    const data = await addDoc(collection(store, "note"), note)
+    uploadString(ref(storage, `${data.path}.json`), markup)
     await getNoteList()
   }
 
-  const deleteNote = () => {}
-  const editNote = () => {}
+  const deleteNote = async (id: string) => {
+    await deleteDoc(doc(store, "note", id))
+    await getNoteList()
+  }
+
+  const editNote = async (noteId: string, markup: string, title: string) => {
+    const washingtonRef = doc(store, "note", noteId)
+
+    await updateDoc(washingtonRef, {
+      title,
+      updateAt: Timestamp.fromDate(new Date()),
+    })
+    uploadString(ref(storage, `note/${noteId}.json`), markup)
+    await getNoteList()
+  }
 
   return {
     noteList,

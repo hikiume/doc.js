@@ -1,8 +1,8 @@
-import { CreateNoteForm } from 'components/note/CreateNoteForm'
-import { Editor } from 'components/Editor'
-import { useState } from 'react'
-import { EditorState } from 'draft-js'
-import { CreateTagForm } from 'components/tag/CreateTagForm'
+import { CreateNoteForm } from "components/note/CreateNoteForm"
+import { Editor } from "components/Editor"
+import { useState } from "react"
+import { EditorState } from "draft-js"
+import { CreateTagForm } from "components/tag/CreateTagForm"
 
 export const Create = () => {
   const [editorState, setEditorState] = useState(() =>
@@ -18,7 +18,7 @@ export const Create = () => {
           </div>
           <CreateNoteForm editorState={editorState} />
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center pb-12">
           <Editor editorState={editorState} setEditorState={setEditorState} />
         </div>
       </div>

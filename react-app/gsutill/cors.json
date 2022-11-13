@@ -1,0 +1,11 @@
+[
+  {
+    "origin": [
+      "https://doc-js-app.web.app/",
+      "https://doc-js-app.firebaseapp.com/"
+    ],
+    "responseHeader": ["*"],
+    "method": ["GET"],
+    "maxAgeSeconds": 86400
+  }
+]

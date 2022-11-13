@@ -1,15 +1,15 @@
-import { store } from 'config/firebase'
+import { store } from "config/firebase"
 import {
   addDoc,
   collection,
   getDocs,
   query,
   Timestamp,
-} from 'firebase/firestore'
-import { useEffect } from 'react'
-import { useUser } from './useUser'
-import { useRecoilState } from 'recoil'
-import { tagAtom } from 'context'
+} from "firebase/firestore"
+import { useEffect } from "react"
+import { useUser } from "./useUser"
+import { useRecoilState } from "recoil"
+import { tagAtom } from "context"
 
 export const useTag = () => {
   const [tagList, setTagList] = useRecoilState(tagAtom)
@@ -23,7 +23,7 @@ export const useTag = () => {
 
   const getTag = async () => {
     const list: any[] = []
-    const querySnapshot = await getDocs(query(collection(store, 'tag')))
+    const querySnapshot = await getDocs(query(collection(store, "tag")))
     querySnapshot.forEach((doc) => {
       list.push({ id: doc.id, ...doc.data() })
     })
@@ -31,7 +31,7 @@ export const useTag = () => {
   }
 
   const createTag = async (name: string) => {
-    if (!user) return alert('not login')
+    if (!user) return alert("not login")
     const tag = {
       userId: user.uid,
       name,
@@ -39,7 +39,7 @@ export const useTag = () => {
       updateAt: Timestamp.now(),
     }
 
-    await addDoc(collection(store, 'tag'), tag)
+    await addDoc(collection(store, "tag"), tag)
     await getTag()
   }
 

@@ -1,17 +1,17 @@
-import { atom } from 'recoil'
-import { Note, NoteComment, Tag } from 'types'
+import { atom } from "recoil"
+import { Note, NoteComment, Tag } from "types"
 
 export const noteAtom = atom<Note[] | null>({
-  key: 'noteAtom',
+  key: "noteAtom",
   default: null,
 })
 
 export const tagAtom = atom<Tag[] | null>({
-  key: 'tagAtom',
+  key: "tagAtom",
   default: null,
 })
 
 export const noteCommentAtom = atom<NoteComment[] | null>({
-  key: 'noteCommentAtom',
+  key: "noteCommentAtom",
   default: null,
 })

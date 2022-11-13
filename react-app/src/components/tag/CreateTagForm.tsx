@@ -1,15 +1,15 @@
-import { TextField } from '@mui/material'
-import { useTag } from 'hooks/useTag'
-import { useState } from 'react'
-import { ButtonBlue } from 'styles/mui/Button'
-import { Tag } from 'types'
+import { TextField } from "@mui/material"
+import { useTag } from "hooks/useTag"
+import { useState } from "react"
+import { ButtonBlue } from "styles/mui/Button"
+import { Tag } from "types"
 
 export const CreateTagForm = () => {
-  const [tagName, setTagName] = useState<Tag['name']>('')
+  const [tagName, setTagName] = useState<Tag["name"]>("")
   const { createTag } = useTag()
 
   const onClick = async () => {
-    if (tagName === '') return alert('hmm')
+    if (tagName === "") return alert("hmm")
     await createTag(tagName)
   }
 
