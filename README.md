@@ -1,0 +1,2 @@
+# doc.js
+test
